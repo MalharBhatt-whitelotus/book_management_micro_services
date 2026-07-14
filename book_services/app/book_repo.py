@@ -2,8 +2,8 @@ from typing import Optional, List
 from sqlalchemy import select,or_, asc, desc
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from book_services.book_model import Book
-from book_services.book_schema import BookCreate, BookUpdate
+from book_services.app.book_model import Book
+from book_services.app.book_schema import BookCreate, BookUpdate
 
 
 class BookRepository:

@@ -1,7 +1,7 @@
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, Float, DateTime, Text
 
-from book_services.book_database import Base
+from book_services.app.book_database import Base
 
 
 class Book(Base):

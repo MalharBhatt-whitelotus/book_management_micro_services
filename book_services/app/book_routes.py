@@ -2,9 +2,9 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from book_services.book_database import get_db
-from book_services.book_schema import BookCreate, BookUpdate, BookRead
-from book_services.book_service import BookService
+from book_services.app.book_database import get_db
+from book_services.app.book_schema import BookCreate, BookUpdate, BookRead
+from book_services.app.book_service import BookService
 
 book_router = APIRouter()
 

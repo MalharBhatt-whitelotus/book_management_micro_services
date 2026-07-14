@@ -1,8 +1,8 @@
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from book_services.book_repo import BookRepository
-from book_services.book_schema import BookCreate, BookUpdate
+from book_services.app.book_repo import BookRepository
+from book_services.app.book_schema import BookCreate, BookUpdate
 
 
 class BookService:

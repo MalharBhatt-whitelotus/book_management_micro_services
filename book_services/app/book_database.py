@@ -1,7 +1,7 @@
 from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 
-from book_services.book_config import settings
+from book_services.app.book_config import settings
 
 # SQLite needs this connect arg for multithreaded FastAPI usage
 engine = create_async_engine(
