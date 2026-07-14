@@ -4,7 +4,11 @@ from contextlib import asynccontextmanager
 from user_services.app.user_config import settings
 from user_services.app.user_routes import user_router
 from user_services.app.user_database import Base,engine
+"""
 
+port === 8003
+
+"""
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     async with engine.begin() as conn:

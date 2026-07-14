@@ -5,6 +5,12 @@ from book_services.app.book_config import settings
 from book_services.app.book_routes import book_router
 from book_services.app.book_database import Base,engine
 
+"""
+
+port === 8002
+
+"""
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     async with engine.begin() as conn:

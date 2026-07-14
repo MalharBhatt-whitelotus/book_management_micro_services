@@ -7,7 +7,7 @@ from user_services.app.user_service import UserService
 from user_services.app.security import get_current_user
 from user_services.app.user_model import User
 
-user_router = APIRouter()
+user_router = APIRouter(prefix="/user", tags=["users"])
 
 
 @user_router.post("/register", response_model=UserRead, status_code=status.HTTP_201_CREATED)

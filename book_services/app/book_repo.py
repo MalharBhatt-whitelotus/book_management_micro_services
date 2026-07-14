@@ -67,11 +67,12 @@ class BookRepository:
         await db.commit()
 
     @staticmethod
-    async def reduce_book_stock(db: AsyncSession, book: Book, quantity: int) -> Book:
+    async def reduce_book_stock(db: AsyncSession, id: int, quantity: int) -> Book:
         """
         Deduct stock after successful checkout.
         Assumes stock validation already happened in service layer.
         """
+        book = db.execute(select(Book).where(Book.id == id))
         book.quantity -= quantity
         await db.flush()  # keep transaction open; commit will happen in service layer
         return book

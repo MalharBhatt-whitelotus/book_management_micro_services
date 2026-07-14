@@ -106,3 +106,13 @@ class BookService:
             sort_by=sort_by,
             order=order
             )
+    
+    @staticmethod
+    async def remove_book_stock(db: AsyncSession, id: int, quantity: int):
+        if not BookRepository.get_book_by_id(db, id):
+            BookRepository.reduce_book_stock(db, id, quantity)
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Book not found")
+        if quantity <= 0 :
+            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail="Invalid Quantity.")
+        result = await BookRepository.reduce_book_stock(db, id, quantity)
+        return result

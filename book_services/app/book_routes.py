@@ -6,9 +6,9 @@ from book_services.app.book_database import get_db
 from book_services.app.book_schema import BookCreate, BookUpdate, BookRead
 from book_services.app.book_service import BookService
 
-book_router = APIRouter()
+book_router = APIRouter(prefix="/book")
 
-@book_router.get("/", response_model=List[BookRead])
+@book_router.get("/get", response_model=List[BookRead])
 async def get_books(
     db: AsyncSession = Depends(get_db),
     keyword: Optional[str] = Query(default=None)
@@ -22,7 +22,7 @@ async def get_books(
     return await BookService.get_all_books(db)
 
 
-@book_router.get("/available", response_model=List[BookRead])
+@book_router.get("/get_available", response_model=List[BookRead])
 async def get_available_books(db: AsyncSession = Depends(get_db)):
     """
     Books with stock > 0
@@ -53,12 +53,12 @@ async def filter_books(
         order=order
         )
 
-@book_router.get("/{book_id}", response_model=BookRead)
-async def get_book(book_id: int, db: AsyncSession = Depends(get_db)):
+@book_router.get("/get_book_by_id", response_model=BookRead)
+async def get_book_by_id(book_id: int, db: AsyncSession = Depends(get_db)):
     return await BookService.get_book_by_id(db, book_id)
 
 
-@book_router.post("/", response_model=BookRead, status_code=status.HTTP_201_CREATED)
+@book_router.post("/create", response_model=BookRead, status_code=status.HTTP_201_CREATED)
 async def create_book(
     book_data: BookCreate,
     db: AsyncSession = Depends(get_db)
@@ -69,7 +69,7 @@ async def create_book(
     return await BookService.create_book(db, book_data)
 
 
-@book_router.put("/{book_id}", response_model=BookRead)
+@book_router.put("/update", response_model=BookRead)
 async def update_book(
     book_id: int,
     update_data: BookUpdate,
@@ -81,7 +81,7 @@ async def update_book(
     return await BookService.update_book(db, book_id, update_data)
 
 
-@book_router.delete("/{book_id}")
+@book_router.delete("/delete")
 async def delete_book(
     book_id: int,
     db: AsyncSession = Depends(get_db)
@@ -90,3 +90,7 @@ async def delete_book(
     Admin-only: delete book
     """
     return await BookService.delete_book(db, book_id)
+
+@book_router.patch("/reduce_book_stock")
+async def reduce_book_stock(id: int, quantity: int, db: AsyncSession = Depends(get_db)):
+    return await BookService.remove_book_stock(db, id, quantity)
