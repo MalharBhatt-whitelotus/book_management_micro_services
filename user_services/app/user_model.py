@@ -1,10 +1,7 @@
 from datetime import datetime
-
 from sqlalchemy import Column, Integer, String, DateTime
-from sqlalchemy.orm import relationship
 
 from user_services.app.user_database import Base
-
 
 class User(Base):
     """
@@ -20,6 +17,3 @@ class User(Base):
     password_hash = Column(String(255), nullable=False)
     role = Column(String(20), nullable=False, default="user")
     created_at = Column(DateTime, default=datetime.utcnow)
-
-    # Relationship with bills
-    bills = relationship("Bill", back_populates="user", cascade="all, delete")
