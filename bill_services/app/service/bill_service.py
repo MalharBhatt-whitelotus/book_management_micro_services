@@ -13,10 +13,9 @@ class BillsService:
     """
     Handles checkout flow, bill generation and inventory deduction.
     """
-    current_user = UserClient.get_current_user()
 
     @staticmethod
-    async def checkout_books(db: AsyncSession, checkout_data: CheckoutRequest) -> BillResponse:
+    async def checkout_books(db: AsyncSession, checkout_data: CheckoutRequest, authorization: str) -> BillResponse:
         """
         Flow:
         1. Validate all books exist
@@ -26,7 +25,7 @@ class BillsService:
         5. Commit transaction
         6. Return bill summary
         """
-
+        current_user = await UserClient.get_current_user(authorization)
         if not checkout_data.items:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
@@ -50,35 +49,35 @@ class BillsService:
                 if item.quantity <= 0:
                     raise HTTPException(
                         status_code=status.HTTP_400_BAD_REQUEST,
-                        detail=f"Quantity for book '{book.title}' must be greater than zero"
+                        detail=f"Quantity for book '{book["title"]}' must be greater than zero"
                     )
 
-                if book.quantity < item.quantity:
+                if book["quantity"] < item.quantity:
                     raise HTTPException(
                         status_code=status.HTTP_400_BAD_REQUEST,
                         detail=(
-                            f"Insufficient stock for '{book.title}'. "
-                            f"Available: {book.quantity}, requested: {item.quantity}"
+                            f"Insufficient stock for '{book["title"]}'. "
+                            f"Available: {book["qauntity"]}, requested: {item.quantity}"
                         )
                     )
 
-                line_total = book.price * item.quantity
+                line_total = book["price"] * item.quantity
                 total_amount += line_total
 
                 bill_row = Bill(
                     order_group=order_group,
-                    user_id=await BillsService.current_user.id,
-                    book_id=book.id,
-                    customer_name=await BillsService.current_user.name,
-                    book_title=book.title,
+                    user_id= current_user["id"],
+                    book_id=book["id"],
+                    customer_name= current_user["name"],
+                    book_title=book["title"],
                     quantity=item.quantity,
-                    unit_price=book.price,
+                    unit_price=book["price"],
                     line_total=line_total
                 )
                 bill_rows.append(bill_row)
 
                 # reduce stock in the same transaction
-                await BookClient.reduce_book_stock(book.id, item.quantity)
+                await BookClient.reduce_book_stock(book["id"], item.quantity)
 
             # create all bill rows
             await BillsRepository.create_bill_rows(db, bill_rows)
@@ -93,7 +92,7 @@ class BillsService:
             return BillsService._build_bill_response(
                 bill_rows=bill_rows,
                 total_amount=total_amount,
-                customer_name=await BillsService.current_user.name,
+                customer_name= current_user["name"],
                 order_group=order_group
             )
 
@@ -123,8 +122,8 @@ class BillsService:
 
     @staticmethod
     async def get_user_bills(db: AsyncSession):
-        current_user = await BillsService.current_user
-        return await BillsRepository.get_bills_by_user_id(db, current_user.id)
+        current_user = current_user
+        return await BillsRepository.get_bills_by_user_id(db, current_user["id"])
 
     @staticmethod
     async def get_bill_order_summary(db: AsyncSession, order_group: str) -> BillResponse:

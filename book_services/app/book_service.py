@@ -106,3 +106,9 @@ class BookService:
             sort_by=sort_by,
             order=order
             )
+    
+    @staticmethod
+    async def reduce_book_stock(db: AsyncSession, book_id: int, quantity: int):
+        result = await BookRepository.reduce_book_stock(db, book_id, quantity)
+
+        return result

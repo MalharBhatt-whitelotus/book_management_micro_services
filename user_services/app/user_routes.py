@@ -7,7 +7,7 @@ from user_services.app.user_service import UserService
 from user_services.app.security import get_current_user
 from user_services.app.user_model import User
 
-user_router = APIRouter()
+user_router = APIRouter(prefix="/user", tags=["users"])
 
 
 @user_router.post("/register", response_model=UserRead, status_code=status.HTTP_201_CREATED)
@@ -31,4 +31,6 @@ async def get_my_profile(current_user: User = Depends(get_current_user)):
     """
     Return current logged-in user profile
     """
+    print("Reached /me")
+    print(current_user)
     return await UserService.get_user_profile(current_user)

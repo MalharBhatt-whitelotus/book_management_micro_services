@@ -16,8 +16,12 @@ class BookClient:
     @staticmethod
     async def reduce_book_stock(book_id: int, quantity: int):
         async with httpx.AsyncClient() as client:
-            response = await client.patch(f"{BookClient.API_URL}/book/reduce_book_stock",params={"id":book_id,"quantity":quantity})
+            response = await client.patch(f"{BookClient.API_URL}/reduce_book_stock",params={"book_id":book_id,"quantity":quantity})
+            print(response.request.method)
+            print(response.request.url)
             print(response.status_code)
+            print(response.headers)
+            print(response.text)    
             print(response.json())
             if response.status_code != 200:
                 raise HTTPException(status_code=409,detail="Books are not reduced.")

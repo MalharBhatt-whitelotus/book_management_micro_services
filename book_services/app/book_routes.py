@@ -6,7 +6,7 @@ from book_services.app.book_database import get_db
 from book_services.app.book_schema import BookCreate, BookUpdate, BookRead
 from book_services.app.book_service import BookService
 
-book_router = APIRouter()
+book_router = APIRouter(prefix="/book", tags=["books"])
 
 @book_router.get("/", response_model=List[BookRead])
 async def get_books(
@@ -53,8 +53,8 @@ async def filter_books(
         order=order
         )
 
-@book_router.get("/{book_id}", response_model=BookRead)
-async def get_book(book_id: int, db: AsyncSession = Depends(get_db)):
+@book_router.get("/get_book_by_id", response_model=BookRead)
+async def get_book_by_id(book_id: int, db: AsyncSession = Depends(get_db)):
     return await BookService.get_book_by_id(db, book_id)
 
 
@@ -90,3 +90,7 @@ async def delete_book(
     Admin-only: delete book
     """
     return await BookService.delete_book(db, book_id)
+
+@book_router.patch("/reduce_book_stock")
+async def reduce_book_stock(book_id: int, quantity: int, db: AsyncSession = Depends(get_db)):
+    return await BookService.reduce_book_stock(db, book_id, quantity)

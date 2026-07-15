@@ -1,18 +1,19 @@
 from typing import List
 
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, Header
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from bill_services.app.bill_database import get_db
 from bill_services.app.bill_schema import CheckoutRequest, BillResponse
 from bill_services.app.service.bill_service import BillsService
-
+from bill_services.app.service.user_client import UserClient
 bill_router = APIRouter(prefix="/bill",tags=["bills"])
 
 
 @bill_router.post("/checkout", response_model=BillResponse, status_code=status.HTTP_201_CREATED)
 async def checkout_books(
     checkout_data: CheckoutRequest,
+    authorization: str = Header(...),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -21,7 +22,7 @@ async def checkout_books(
     - create bill
     - reduce inventory
     """
-    return await BillsService.checkout_books(db, checkout_data)
+    return await BillsService.checkout_books(db, checkout_data, authorization)
 
 
 @bill_router.get("/my")
