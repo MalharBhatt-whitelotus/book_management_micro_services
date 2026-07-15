@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from book_services.app.book_repo import BookRepository
 from book_services.app.book_schema import BookCreate, BookUpdate
-
+from book_services.app.utils.book_service_utils import valid_sort_by, valid_order, valid_min_price, valid_max_price, valid_max_min_price
 
 class BookService:
     """
@@ -86,6 +86,7 @@ class BookService:
     @staticmethod
     async def filter_and_sort_books(
         db: AsyncSession,
+        current_user,
         category: str | None = None,
         author: str | None = None,
         book_type: str | None = None,
@@ -93,8 +94,29 @@ class BookService:
         max_price: float | None = None,
         available: bool | None = None,
         sort_by: str = "id",
-        order: str = "asc"
+        order: str = "asc"        
         ):
+        if not current_user:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User is not logged in.")
+        
+        if sort_by:
+            if not valid_sort_by(sort_by):
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid sort_by request.")
+        
+        if order:
+            if not valid_order(order):
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid order request.")
+        
+        if min_price and max_price:
+            if not valid_max_min_price(min_price, max_price):
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid order request.")
+        if min_price:
+            if not valid_min_price(min_price):
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid order request.")
+        if max_price:
+            if not valid_max_price(max_price):
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid order request.")
+                    
         return await BookRepository.filter_and_sort_books(
             db=db,
             category=category,

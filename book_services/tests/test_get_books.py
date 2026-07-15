@@ -15,3 +15,29 @@ async def test_get_books_by_keyword(client):
     assert response.status_code == 200
     books = response.json()
     assert isinstance(books,list)
+
+@pytest.mark.asyncio
+async def test_get_book_by_id(client):
+    token = await get_token()
+
+    response = await client.get(
+        f"/book/get_book_by_id/21",
+        headers={"Authorization": f"Bearer {token}"}
+    )
+
+    assert response.status_code == 200
+
+    book = response.json()
+
+    assert book["id"] == 21
+
+@pytest.mark.asyncio
+async def test_get_invalid_book(client):
+    token = await get_token()
+
+    response = await client.get(
+        "/book/get/999999",
+        headers={"Authorization": f"Bearer {token}"}
+    )
+
+    assert response.status_code == 404

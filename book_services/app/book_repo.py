@@ -114,6 +114,7 @@ class BookRepository:
             "id":Book.id,
             "title": Book.title,
             "author": Book.author,
+            "book_type": Book.book_type,
             "category": Book.category,
             "price": Book.price,
             "quantity": Book.quantity,

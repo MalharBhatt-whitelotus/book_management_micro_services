@@ -6,7 +6,7 @@ class BookClient:
     @staticmethod
     async def get_book_by_id(book_id: int):
         async with httpx.AsyncClient() as client:
-            response = await client.get(f"{BookClient.API_URL}/get_book_by_id",params={"book_id":book_id})
+            response = await client.get(f"{BookClient.API_URL}/get_book_by_id/{book_id}")
             print(response.status_code)
             print(response.json())
             if response.status_code != 200:
