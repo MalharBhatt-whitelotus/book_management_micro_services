@@ -108,17 +108,11 @@ class BookService:
             )
     
     @staticmethod
-<<<<<<< HEAD
-    async def reduce_book_stock(db: AsyncSession, book_id: int, quantity: int):
-        result = await BookRepository.reduce_book_stock(db, book_id, quantity)
-
-=======
-    async def remove_book_stock(db: AsyncSession, id: int, quantity: int):
+    async def reduce_book_stock(db: AsyncSession, id: int, quantity: int):
         if not BookRepository.get_book_by_id(db, id):
             BookRepository.reduce_book_stock(db, id, quantity)
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Book not found")
         if quantity <= 0 :
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail="Invalid Quantity.")
         result = await BookRepository.reduce_book_stock(db, id, quantity)
->>>>>>> bill_services
         return result

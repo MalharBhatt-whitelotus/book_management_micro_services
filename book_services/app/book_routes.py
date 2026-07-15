@@ -6,11 +6,7 @@ from book_services.app.book_database import get_db
 from book_services.app.book_schema import BookCreate, BookUpdate, BookRead
 from book_services.app.book_service import BookService
 
-<<<<<<< HEAD
 book_router = APIRouter(prefix="/book", tags=["books"])
-=======
-book_router = APIRouter(prefix="/book")
->>>>>>> bill_services
 
 @book_router.get("/get", response_model=List[BookRead])
 async def get_books(
@@ -96,10 +92,5 @@ async def delete_book(
     return await BookService.delete_book(db, book_id)
 
 @book_router.patch("/reduce_book_stock")
-<<<<<<< HEAD
 async def reduce_book_stock(book_id: int, quantity: int, db: AsyncSession = Depends(get_db)):
     return await BookService.reduce_book_stock(db, book_id, quantity)
-=======
-async def reduce_book_stock(id: int, quantity: int, db: AsyncSession = Depends(get_db)):
-    return await BookService.remove_book_stock(db, id, quantity)
->>>>>>> bill_services
