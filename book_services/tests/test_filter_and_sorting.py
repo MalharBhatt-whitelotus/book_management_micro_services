@@ -5,10 +5,7 @@ from book_services.tests.get_token import get_token
 @pytest.mark.asyncio
 async def test_filter_category(client):
     token = await get_token()
-
     response = await client.get("/book/filter?category=Programming/", headers={"Authorization":f"Bearer {token}"})
-    print(response.status_code)
-    print(response.json())
     assert response.status_code == 200
     books = response.json()
     for book in books:

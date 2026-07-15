@@ -5,6 +5,4 @@ async def get_token():
         "username":"admin",
         "password":"admin123"
     } )
-        print(response.status_code)
-        print(response.json())
         return response.json()["access_token"]

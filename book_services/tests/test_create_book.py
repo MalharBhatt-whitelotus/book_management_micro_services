@@ -16,12 +16,6 @@ async def test_create_book(client):
     }
 
     response = await client.post(f"/book/", json=payload, headers={"Authorization":f"bearer {token}"})
-    print(response.request.method)
-    print(response.request.url)
-    print(response.status_code)
-    print(response.headers)
-    print(response.text)    
-    print(response.json())
     assert response.status_code == 201
     # result = response.json()
     # assert isinstance(result, list)
