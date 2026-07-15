@@ -67,14 +67,22 @@ class BookRepository:
         await db.commit()
 
     @staticmethod
+<<<<<<< HEAD
     async def reduce_book_stock(db: AsyncSession, book_id: int, quantity: int) -> Book:
+=======
+    async def reduce_book_stock(db: AsyncSession, id: int, quantity: int) -> Book:
+>>>>>>> bill_services
         """
         Deduct stock after successful checkout.
         Assumes stock validation already happened in service layer.
         """
+<<<<<<< HEAD
         book = await BookRepository.get_book_by_id(db, book_id)
         if not book:
             return None
+=======
+        book = db.execute(select(Book).where(Book.id == id))
+>>>>>>> bill_services
         book.quantity -= quantity
         await db.commit()
         await db.refresh(book)
