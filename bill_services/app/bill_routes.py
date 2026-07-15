@@ -27,12 +27,13 @@ async def checkout_books(
 
 @bill_router.get("/my")
 async def get_my_bills(
+    authorization: str = Header(...),
     db: AsyncSession = Depends(get_db)
 ):
     """
     Current logged-in user's bills
     """
-    return await BillsService.get_user_bills(db)
+    return await BillsService.get_user_bills(db,authorization)
 
 
 @bill_router.get("/order/{order_group}", response_model=BillResponse)

@@ -10,7 +10,7 @@ from user_services.app.user_model import User
 user_router = APIRouter(prefix="/user", tags=["users"])
 
 
-@user_router.post("/register", response_model=UserRead, status_code=status.HTTP_201_CREATED)
+@user_router.post("/registration", response_model=UserRead, status_code=status.HTTP_201_CREATED)
 async def register_user(user_data: UserRegister, db: AsyncSession = Depends(get_db)):
     """
     Register a normal user

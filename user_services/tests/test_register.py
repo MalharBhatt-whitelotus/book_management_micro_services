@@ -11,5 +11,5 @@ async def test_register(client):
         "password": "password123"
         }
     
-    response = await client.post("/user/register", json=payload)
+    response = await client.post("/user/registration", json=payload)
     assert response.status_code == 201

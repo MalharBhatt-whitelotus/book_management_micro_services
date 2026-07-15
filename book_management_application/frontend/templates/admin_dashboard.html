@@ -645,7 +645,7 @@
 
     async function loadBooks() {
       try {
-        const res = await fetch(`${API_BASE}/books/`);
+        const res = await fetch(`${API_BASE}/book/get`);
         const books = await res.json();
 
         if (!res.ok) throw new Error(books.detail || "Failed to load books");
@@ -706,7 +706,7 @@
     }
 
     async function createBook(payload) {
-      const res = await fetch(`${API_BASE}/books/`, {
+      const res = await fetch(`${API_BASE}/book/create`, {
         method: "POST",
         headers: authHeaders(),
         body: JSON.stringify(payload)
@@ -717,7 +717,7 @@
     }
 
     async function updateBook(id, payload) {
-      const res = await fetch(`${API_BASE}/books/${id}`, {
+      const res = await fetch(`${API_BASE}/book/update/${id}`, {
         method: "PUT",
         headers: authHeaders(),
         body: JSON.stringify(payload)
@@ -734,7 +734,7 @@
       clearAlert();
 
       try {
-        const res = await fetch(`${API_BASE}/books/${id}`, {
+        const res = await fetch(`${API_BASE}/book/delete/${id}`, {
           method: "DELETE",
           headers: authHeaders()
         });
@@ -783,7 +783,7 @@
 
     async function loadBills() {
       try {
-        const res = await fetch(`${API_BASE}/bills/`, {
+        const res = await fetch(`${API_BASE}/bill/`, {
           headers: {
             "Authorization": `Bearer ${token}`
           }

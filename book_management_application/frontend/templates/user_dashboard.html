@@ -653,8 +653,8 @@
       clearAlert();
       try {
         const url = keyword
-          ? `${API_BASE}/books/?keyword=${encodeURIComponent(keyword)}`
-          : `${API_BASE}/books/available`;
+          ? `${API_BASE}/book/get/?keyword=${encodeURIComponent(keyword)}`
+          : `${API_BASE}/book/get_available`;
 
         const res = await fetch(url);
         const data = await res.json();
@@ -828,7 +828,7 @@
       };
 
       try {
-        const res = await fetch(`${API_BASE}/bills/checkout`, {
+        const res = await fetch(`${API_BASE}/bill/checkout`, {
           method: "POST",
           headers: authHeaders(true),
           body: JSON.stringify(payload)
@@ -902,7 +902,7 @@
 
     async function loadPurchaseHistory() {
       try {
-        const res = await fetch(`${API_BASE}/bills/my`, {
+        const res = await fetch(`${API_BASE}/bill/my`, {
           headers: authHeaders()
         });
 
@@ -1031,7 +1031,7 @@
       }
 
       try {
-        const res = await fetch(`${API_BASE}/books/filter?${params.toString()}`);
+        const res = await fetch(`${API_BASE}/book/filter?${params.toString()}`);
         const data = await res.json();
 
         if (!res.ok) throw new Error(data.detail || "Failed to filter books");
@@ -1085,7 +1085,7 @@
 
     // Initial page load
     renderCart();
-    loadBooks();
+    loadBooks(); 
     loadPurchaseHistory();
   </script>
 </body>

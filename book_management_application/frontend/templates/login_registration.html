@@ -455,7 +455,7 @@
       };
 
       try {
-        const res = await fetch(`${API_BASE}/main/register`, {
+        const res = await fetch(`${API_BASE}/user/registration`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
@@ -486,7 +486,7 @@
       };
 
       try {
-        const res = await fetch(`${API_BASE}/main/login`, {
+        const res = await fetch(`${API_BASE}/user/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)

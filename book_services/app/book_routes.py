@@ -21,7 +21,6 @@ async def get_books(
         return await BookService.search_books(db, keyword)
     return await BookService.get_all_books(db)
 
-
 @book_router.get("/get_available", response_model=List[BookRead])
 async def get_available_books(db: AsyncSession = Depends(get_db)):
     """
@@ -69,7 +68,7 @@ async def create_book(
     return await BookService.create_book(db, book_data)
 
 
-@book_router.put("/update", response_model=BookRead)
+@book_router.put("/update/{book_id}", response_model=BookRead)
 async def update_book(
     book_id: int,
     update_data: BookUpdate,
@@ -81,7 +80,7 @@ async def update_book(
     return await BookService.update_book(db, book_id, update_data)
 
 
-@book_router.delete("/delete")
+@book_router.delete("/delete/{book_id}")
 async def delete_book(
     book_id: int,
     db: AsyncSession = Depends(get_db)

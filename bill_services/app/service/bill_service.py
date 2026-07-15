@@ -121,8 +121,8 @@ class BillsService:
         return  await BillsRepository.get_all_bills(db)
 
     @staticmethod
-    async def get_user_bills(db: AsyncSession):
-        current_user = current_user
+    async def get_user_bills(db: AsyncSession,authorization: str):
+        current_user = await UserClient.get_current_user(authorization)
         return await BillsRepository.get_bills_by_user_id(db, current_user["id"])
 
     @staticmethod
