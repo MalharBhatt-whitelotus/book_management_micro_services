@@ -37,16 +37,19 @@ class BookRepository:
 
     @staticmethod
     async def search_books(db: AsyncSession, keyword: str) -> List[Book]:
-        keyword = f"%{keyword}%"
+        keyword = f"%{keyword.strip()}%"
         result = await db.execute(
             select(Book)
             .where( 
                 or_(
                     Book.title.ilike(keyword) ,
                     Book.author.ilike(keyword) ,
-                    Book.category.ilike(keyword)
-                    )
-                    ).order_by(Book.id.desc())
+                    Book.category.ilike(keyword),
+                    Book.description.ilike(keyword),
+                    Book.price.ilike(keyword),
+                    ),
+                Book.quantity > 0
+                ).order_by(Book.id.desc())
         )
         return result.scalars().all()
 

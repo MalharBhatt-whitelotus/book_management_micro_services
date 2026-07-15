@@ -498,9 +498,9 @@
           throw new Error(data.detail || "Login failed");
         }
 
-        localStorage.setItem("access_token", data["access_token"]);
-        localStorage.setItem("user_role", data["role"]);
-        localStorage.setItem("username", data["username"]);
+        localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("user_role", data.role);
+        localStorage.setItem("username", data.username);
 
         if (data.role === "admin") {
           window.location.href = "/admin";
