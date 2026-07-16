@@ -83,24 +83,24 @@ class UserService:
     async def get_user_profile(user):
         return user
 
-    @staticmethod
-    async def create_default_admin_if_not_exists(db: AsyncSession):
-        """
-        Auto-create default admin from .env if it does not exist.
-        Call this during app startup in main.py later.
-        """
-        admin = await UserRepository.get_user_by_username(db, settings.ADMIN_DEFAULT_USERNAME)
-        if admin:
-            return admin
+    # @staticmethod
+    # async def create_default_admin_if_not_exists(db: AsyncSession):
+    #     """
+    #     Auto-create default admin from .env if it does not exist.
+    #     Call this during app startup in main.py later.
+    #     """
+    #     admin = await UserRepository.get_user_by_username(db, settings.ADMIN_DEFAULT_USERNAME)
+    #     if admin:
+    #         return admin
 
-        hashed_password = hash_password(settings.ADMIN_DEFAULT_PASSWORD)
+    #     hashed_password = hash_password(settings.ADMIN_DEFAULT_PASSWORD)
 
-        admin = await UserRepository.create_user(
-            db=db,
-            name="System Admin",
-            username=settings.ADMIN_DEFAULT_USERNAME,
-            email=settings.ADMIN_DEFAULT_EMAIL,
-            password_hash=hashed_password,
-            role="admin"
-        )
-        return admin
+    #     admin = await UserRepository.create_user(
+    #         db=db,
+    #         name="System Admin",
+    #         username=settings.ADMIN_DEFAULT_USERNAME,
+    #         email=settings.ADMIN_DEFAULT_EMAIL,
+    #         password_hash=hashed_password,
+    #         role="admin"
+    #     )
+    #     return admin
