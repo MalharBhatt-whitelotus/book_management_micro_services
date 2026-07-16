@@ -1,12 +1,14 @@
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy import NullPool
+
 from user_services.app.user_config import settings
 
 # SQLite needs this connect arg for multithreaded FastAPI usage
 engine = create_async_engine(
     settings.DATABASE_URL,
-    connect_args={"check_same_thread": False},
-    echo=True
+    echo=True,
+    poolclass=NullPool
 )
 
 AsyncSessionLocal = sessionmaker(
@@ -18,7 +20,9 @@ AsyncSessionLocal = sessionmaker(
 )
 
 Base = declarative_base()
-
+print("=" * 80)
+print("USER DB URL:", settings.DATABASE_URL)
+print("=" * 80)
 
 async def get_db():
     """

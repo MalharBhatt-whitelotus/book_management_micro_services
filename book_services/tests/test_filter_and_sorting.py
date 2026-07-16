@@ -181,6 +181,30 @@ async def test_invalid_price_range(client):
     assert response.status_code in (400, 422)
 
 @pytest.mark.asyncio
+async def test_invalid_price_min_range(client):
+    token = await get_token()
+
+    response = await client.get(
+        "/book/filter?min_price=-1",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+
+    # Change if your API returns a different status
+    assert response.status_code in (400, 422)
+
+@pytest.mark.asyncio
+async def test_invalid_price_max_range(client):
+    token = await get_token()
+
+    response = await client.get(
+        "/book/filter?max_price=-1",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+
+    # Change if your API returns a different status
+    assert response.status_code in (400, 422)
+
+@pytest.mark.asyncio
 async def test_filter_without_parameters(client):
     token = await get_token()
 

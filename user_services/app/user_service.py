@@ -42,6 +42,8 @@ class UserService:
             db=db,
             name=user_data.name,
             username=user_data.username,
+            dial_code=user_data.dial_code,
+            phone_number=user_data.phone_number,
             email=user_data.email,
             password_hash=hashed_password,
             role="user"

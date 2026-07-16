@@ -9,6 +9,9 @@ class UserRegister(BaseModel):
     username: str = Field(..., min_length=3, max_length=100)
     email: EmailStr
     password: str = Field(..., min_length=6, max_length=128)
+    dial_code: str = Field(max_length=4)
+    phone_number: str = Field(...)
+
 
 
 class UserLogin(BaseModel):
@@ -23,7 +26,9 @@ class UserRead(BaseModel):
     email: EmailStr
     role: str
     created_at: datetime
-
+    dial_code: str
+    phone_number: str
+    
     model_config = ConfigDict(from_attributes=True)
 
 

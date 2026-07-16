@@ -16,6 +16,8 @@ class UserRepository:
         db: AsyncSession,
         name: str,
         username: str,
+        dial_code: str,
+        phone_number: str,
         email: str,
         password_hash: str,
         role: str = "user"
@@ -23,6 +25,8 @@ class UserRepository:
         user = User(
             name=name,
             username=username,
+            dial_code=dial_code,
+            phone_number=phone_number,
             email=email,
             password_hash=password_hash,
             role=role

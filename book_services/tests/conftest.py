@@ -3,7 +3,14 @@ from httpx import AsyncClient, ASGITransport
 
 from book_services.app.main import app
 
-@pytest_asyncio.fixture
+
+@pytest_asyncio.fixture(scope="function")
 async def client():
-    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://book") as ac:
+
+    transport = ASGITransport(app=app)
+
+    async with AsyncClient(
+        transport=transport,
+        base_url="http://book"
+    ) as ac:
         yield ac

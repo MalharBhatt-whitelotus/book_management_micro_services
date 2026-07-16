@@ -32,6 +32,18 @@ async def test_get_book_by_id(client):
     assert book["id"] == 21
 
 @pytest.mark.asyncio
+async def test_get_book_by_invalid_id(client):
+    token = await get_token()
+
+    response = await client.get(
+        f"/book/get_book_by_id/999999",
+        headers={"Authorization": f"Bearer {token}"}
+    )
+
+    assert response.status_code == 404
+
+
+@pytest.mark.asyncio
 async def test_get_invalid_book(client):
     token = await get_token()
 
@@ -41,3 +53,19 @@ async def test_get_invalid_book(client):
     )
 
     assert response.status_code == 404
+
+@pytest.mark.asyncio
+async def test_available_books(client):
+    token = await get_token()
+
+    response = await client.get(
+        "/book/get_available",
+        headers={"Authorization": f"Bearer {token}"}
+    )
+
+    assert response.status_code == 200
+
+    books = response.json()
+
+    for book in books:
+        assert book["quantity"] > 0

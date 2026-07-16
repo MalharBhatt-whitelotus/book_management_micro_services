@@ -5,7 +5,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from book_services.app.book_database import get_db
 from book_services.app.book_schema import BookCreate, BookUpdate, BookRead
 from book_services.app.book_service import BookService
-from book_services.app.service.user_client import UserClient
 
 book_router = APIRouter(prefix="/book", tags=["books"])
 
@@ -39,9 +38,9 @@ async def filter_books(
     available: Optional[bool] = None,
     sort_by: str = "id",
     order: str = "asc",
-    db: AsyncSession = Depends(get_db),
-    current_user = [Depends(UserClient.get_current_user)]
+    db: AsyncSession = Depends(get_db)
 ):
+    
     return await BookService.filter_and_sort_books(
         db=db,
         category=category,
@@ -51,8 +50,7 @@ async def filter_books(
         max_price=max_price,
         available=available,
         sort_by=sort_by,
-        order=order,
-        current_user=current_user
+        order=order
         )
 
 @book_router.get("/get_book_by_id/{book_id}", response_model=BookRead)

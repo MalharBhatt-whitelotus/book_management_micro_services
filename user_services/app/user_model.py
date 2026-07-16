@@ -17,3 +17,5 @@ class User(Base):
     password_hash = Column(String(255), nullable=False)
     role = Column(String(20), nullable=False, default="user")
     created_at = Column(DateTime, default=datetime.utcnow)
+    dial_code = Column(String, default="+91")
+    phone_number = Column(String(10), nullable=False, index= True)

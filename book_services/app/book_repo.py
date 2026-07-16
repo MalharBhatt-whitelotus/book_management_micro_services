@@ -1,4 +1,5 @@
 from typing import Optional, List
+from sqlalchemy import cast, String
 from sqlalchemy import select,or_, asc, desc
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -46,7 +47,7 @@ class BookRepository:
                     Book.author.ilike(keyword) ,
                     Book.category.ilike(keyword),
                     Book.description.ilike(keyword),
-                    Book.price.ilike(keyword),
+                    cast(Book.price, String).ilike(keyword),
                     ),
                 Book.quantity > 0
                 ).order_by(Book.id.desc())

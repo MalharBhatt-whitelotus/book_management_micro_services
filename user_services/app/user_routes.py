@@ -9,6 +9,16 @@ from user_services.app.user_model import User
 
 user_router = APIRouter(prefix="/user", tags=["users"])
 
+from sqlalchemy import text
+
+
+@user_router.get("/test-db")
+async def test_db(db: AsyncSession = Depends(get_db)):
+    result = await db.execute(text("SELECT current_database();"))
+
+    return {
+        "database": result.scalar()
+    }
 
 @user_router.post("/registration", response_model=UserRead, status_code=status.HTTP_201_CREATED)
 async def register_user(user_data: UserRegister, db: AsyncSession = Depends(get_db)):

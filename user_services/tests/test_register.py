@@ -7,6 +7,8 @@ async def test_register(client):
     payload = {
         "name": "test User",
         "username": f"testU{number}",
+        "dial_code": "+91",
+        "phone_number": "1237894560",
         "email": f"User{number}@gmail.com",
         "password": "password123"
         }
