@@ -11,6 +11,7 @@ from book_management_application.app.routers.bill_service_routes import bill_rou
 from book_management_application.app.config import settings
 
 app = FastAPI(title="API Gateway")
+
 app.include_router(view_routes)
 app.include_router(user_routes)
 app.include_router(book_routes)

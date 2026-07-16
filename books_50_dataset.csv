@@ -1,0 +1,51 @@
+title,author,category,price,quantity,description,book_type
+Atomic Habits,James Clear,Self Help,499.0,21,Atomic Habits by James Clear.,hardcopy
+Atomic Habits,James Clear,Self Help,224.55,81,Digital edition of Atomic Habits.,softcopy
+Deep Work,Cal Newport,Productivity,450.0,22,Deep Work by Cal Newport.,hardcopy
+Deep Work,Cal Newport,Productivity,202.5,82,Digital edition of Deep Work.,softcopy
+Psychology of Money,Morgan Housel,Finance,520.0,23,Psychology of Money by Morgan Housel.,hardcopy
+Psychology of Money,Morgan Housel,Finance,234.0,83,Digital edition of Psychology of Money.,softcopy
+Rich Dad Poor Dad,Robert Kiyosaki,Finance,400.0,24,Rich Dad Poor Dad by Robert Kiyosaki.,hardcopy
+Rich Dad Poor Dad,Robert Kiyosaki,Finance,180.0,84,Digital edition of Rich Dad Poor Dad.,softcopy
+Think and Grow Rich,Napoleon Hill,Motivation,380.0,25,Think and Grow Rich by Napoleon Hill.,hardcopy
+Think and Grow Rich,Napoleon Hill,Motivation,171.0,85,Digital edition of Think and Grow Rich.,softcopy
+Ikigai,Francesc Miralles,Self Help,320.0,26,Ikigai by Francesc Miralles.,hardcopy
+Ikigai,Francesc Miralles,Self Help,144.0,86,Digital edition of Ikigai.,softcopy
+Zero to One,Peter Thiel,Business,410.0,27,Zero to One by Peter Thiel.,hardcopy
+Zero to One,Peter Thiel,Business,184.5,87,Digital edition of Zero to One.,softcopy
+Lean Startup,Eric Ries,Business,460.0,28,Lean Startup by Eric Ries.,hardcopy
+Lean Startup,Eric Ries,Business,207.0,88,Digital edition of Lean Startup.,softcopy
+Start With Why,Simon Sinek,Business,430.0,29,Start With Why by Simon Sinek.,hardcopy
+Start With Why,Simon Sinek,Business,193.5,89,Digital edition of Start With Why.,softcopy
+7 Habits,Stephen Covey,Self Help,540.0,30,7 Habits by Stephen Covey.,hardcopy
+7 Habits,Stephen Covey,Self Help,243.0,90,Digital edition of 7 Habits.,softcopy
+Clean Code,Robert C. Martin,Programming,650.0,31,Clean Code by Robert C. Martin.,hardcopy
+Clean Code,Robert C. Martin,Programming,292.5,91,Digital edition of Clean Code.,softcopy
+Pragmatic Programmer,Andrew Hunt,Programming,750.0,32,Pragmatic Programmer by Andrew Hunt.,hardcopy
+Pragmatic Programmer,Andrew Hunt,Programming,337.5,92,Digital edition of Pragmatic Programmer.,softcopy
+Python Crash Course,Eric Matthes,Programming,700.0,33,Python Crash Course by Eric Matthes.,hardcopy
+Python Crash Course,Eric Matthes,Programming,315.0,93,Digital edition of Python Crash Course.,softcopy
+Fluent Python,Luciano Ramalho,Programming,980.0,34,Fluent Python by Luciano Ramalho.,hardcopy
+Fluent Python,Luciano Ramalho,Programming,441.0,94,Digital edition of Fluent Python.,softcopy
+Effective Python,Brett Slatkin,Programming,820.0,35,Effective Python by Brett Slatkin.,hardcopy
+Effective Python,Brett Slatkin,Programming,369.0,95,Digital edition of Effective Python.,softcopy
+Intro to Algorithms,Thomas Cormen,Computer Science,1200.0,36,Intro to Algorithms by Thomas Cormen.,hardcopy
+Intro to Algorithms,Thomas Cormen,Computer Science,540.0,96,Digital edition of Intro to Algorithms.,softcopy
+Grokking Algorithms,Aditya Bhargava,Computer Science,680.0,37,Grokking Algorithms by Aditya Bhargava.,hardcopy
+Grokking Algorithms,Aditya Bhargava,Computer Science,306.0,97,Digital edition of Grokking Algorithms.,softcopy
+DDIA,Martin Kleppmann,System Design,1100.0,38,DDIA by Martin Kleppmann.,hardcopy
+DDIA,Martin Kleppmann,System Design,495.0,98,Digital edition of DDIA.,softcopy
+Hands-On ML,Aurelien Geron,AI/ML,950.0,39,Hands-On ML by Aurelien Geron.,hardcopy
+Hands-On ML,Aurelien Geron,AI/ML,427.5,99,Digital edition of Hands-On ML.,softcopy
+Deep Learning,Ian Goodfellow,AI/ML,1350.0,40,Deep Learning by Ian Goodfellow.,hardcopy
+Deep Learning,Ian Goodfellow,AI/ML,607.5,100,Digital edition of Deep Learning.,softcopy
+The Alchemist,Paulo Coelho,Fiction,350.0,41,The Alchemist by Paulo Coelho.,hardcopy
+The Alchemist,Paulo Coelho,Fiction,157.5,101,Digital edition of The Alchemist.,softcopy
+1984,George Orwell,Dystopian,360.0,42,1984 by George Orwell.,hardcopy
+1984,George Orwell,Dystopian,162.0,102,Digital edition of 1984.,softcopy
+Animal Farm,George Orwell,Satire,250.0,43,Animal Farm by George Orwell.,hardcopy
+Animal Farm,George Orwell,Satire,112.5,103,Digital edition of Animal Farm.,softcopy
+The Hobbit,J.R.R. Tolkien,Fantasy,480.0,44,The Hobbit by J.R.R. Tolkien.,hardcopy
+The Hobbit,J.R.R. Tolkien,Fantasy,216.0,104,Digital edition of The Hobbit.,softcopy
+Harry Potter 1,J.K. Rowling,Fantasy,550.0,45,Harry Potter 1 by J.K. Rowling.,hardcopy
+Harry Potter 1,J.K. Rowling,Fantasy,247.5,105,Digital edition of Harry Potter 1.,softcopy

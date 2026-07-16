@@ -223,7 +223,54 @@
       border-color:#93c5fd;
       box-shadow:0 0 0 4px rgba(59,130,246,.12);
     }
+    .select-box{
+    width:100%;
+    display:flex;
+    align-items:center;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:0 14px;
+    height:48px;
+    transition:.2s ease;
+    }
 
+    .select-box:hover{
+        border-color:#93c5fd;
+    }
+
+    .select-box:focus-within{
+        border-color:#93c5fd;
+        box-shadow:0 0 0 4px rgba(59,130,246,.12);
+    }
+
+    .select-box select{
+        width:100%;
+        height:100%;
+        border:none;
+        outline:none;
+        background:transparent;
+        font-size:.98rem;
+        font-family:inherit;
+        color:var(--text);
+        cursor:pointer;
+        appearance:none;
+    }
+
+    /* dropdown arrow */
+    .select-box{
+        position:relative;
+    }
+
+    .select-box::after{
+        content:"⌄";
+        position:absolute;
+        right:16px;
+        pointer-events:none;
+        color:#64748b;
+        font-size:1.1rem;
+    }
+    
     .btn{
       width:100%;
       border:none;
@@ -385,6 +432,30 @@
               <input id="regUsername" name="username" type="text" placeholder="Choose a username" required />
             </div>
 
+            <div class="field">
+              <label for="regDialCode">Dial Code</label>
+
+                <div class="select-box">
+                    <select id="regDialCode" name="dial_code">
+                        <option value="+91" selected>🇮🇳 India (+91)</option>
+                        <option value="+1">🇺🇸 USA (+1)</option>
+                        <option value="+44">🇬🇧 UK (+44)</option>
+                        <option value="+61">🇦🇺 Australia (+61)</option>
+                        <option value="+81">🇯🇵 Japan (+81)</option>
+                        <option value="+86">🇨🇳 China (+86)</option>
+                        <option value="+49">🇩🇪 Germany (+49)</option>
+                        <option value="+33">🇫🇷 France (+33)</option>
+                        <option value="+971">🇦🇪 UAE (+971)</option>
+                        <option value="+7">🇷🇺 Russia (+7)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field">
+              <label for="regPhone">Phone Number</label>
+              <input id="regPhone" name="Phone" type="text" placeholder="Your Phone Number" required />
+            </div>
+
             <div class="field full">
               <label for="regEmail">Email</label>
               <input id="regEmail" name="email" type="email" placeholder="Enter your email" required />
@@ -450,6 +521,8 @@
       const payload = {
         name: document.getElementById("regName").value.trim(),
         username: document.getElementById("regUsername").value.trim(),
+        dial_code: document.getElementById("regDialCode").value.trim(),
+        phone_number: document.getElementById("regPhone").value.trim(),
         email: document.getElementById("regEmail").value.trim(),
         password: document.getElementById("regPassword").value
       };
