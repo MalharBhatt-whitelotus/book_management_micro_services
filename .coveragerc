@@ -1,0 +1,7 @@
+[run]
+omit =
+    */seed_books.py
+    */seed_admin.py
+    */seed_data.py
+    */admin_insert.py
+    */security.py
