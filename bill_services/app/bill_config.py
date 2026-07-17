@@ -11,7 +11,7 @@ class BillSettings(BaseSettings):
 
     SECRET_KEY: str = "super-secret-key-change-me"
     ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 5
 
     ADMIN_DEFAULT_USERNAME: str = "admin"
     ADMIN_DEFAULT_EMAIL: str = "admin@example.com"
