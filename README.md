@@ -1,40 +1,101 @@
-# Book Management System
+# Book Management System - Microservices Architecture
 
-A modern **Book Management System** built with **FastAPI**, featuring a professional **single-page HTML dashboard UI** for managing books with support for:
+A modern **Book Management System** built using **FastAPI Microservices Architecture**. The application follows a modular and scalable design where each business domain is implemented as an independent microservice and managed through a centralized **API Gateway**.
 
-* Add Book
-* Update Book
-* Delete Book
-* Search Book
-* Paginated Book Inventory
-* Book Statistics Dashboard
-* Light / Dark Mode UI
+The API Gateway automatically starts, monitors, and stops all microservices, providing a single entry point for the application.
 
 ---
 
 # Features
 
-## Backend Features
+## API Gateway
 
-* Built with **FastAPI**
-* REST API for complete book management
-* CRUD operations for books
-* Search books by text
-* Paginated book listing
-* Summary APIs for dashboard stats
+* Central entry point for all client requests
+* Automatically starts all backend microservices
+* Automatically stops all microservices when the gateway shuts down
+* Monitors running services in the background
+* Automatically restarts any crashed service
+* Continues running even if one or more child services terminate
+* Jinja2-based HTML frontend
+* Reverse proxy endpoints for all backend services
 
-## Frontend Features
+---
 
-* Single-page **HTML + CSS + JavaScript** dashboard
-* Professional admin-style UI
-* Light / Dark mode toggle
-* Inventory table with pagination
-* Search bar integrated with backend search
-* Add Book collapsible form
-* Update Book modal
-* Delete confirmation modal
-* Toast notifications for user feedback
-* Responsive design
+## User Service
+
+* User Registration
+* User Login
+* JWT Authentication
+* Password Hashing
+* User Profile Management
+
+---
+
+## Book Service
+
+* Add Book
+* Update Book
+* Delete Book
+* Search Books
+* Upload Book Cover Image
+* Upload Book PDF
+* Pagination
+* Book Statistics
+* Inventory Management
+
+---
+
+## Bill Service
+
+* Checkout Books
+* Bill Generation
+* Purchase History
+* Stock Management
+* Order Summary
+
+---
+
+# Service Manager
+
+The API Gateway includes a custom **Service Manager** responsible for managing all microservices.
+
+## Responsibilities
+
+* Starts all services automatically during gateway startup.
+* Stops every service during gateway shutdown.
+* Continuously monitors all running services.
+* Automatically restarts any crashed service.
+* Keeps the API Gateway running even if a child service terminates unexpectedly.
+
+---
+
+# Architecture
+
+```text
+                           +----------------------+
+                           |     API Gateway      |
+                           |       Port 8000      |
+                           +----------+-----------+
+                                      |
+        --------------------------------------------------------
+        |                     |                     |
+        ▼                     ▼                     ▼
++---------------+     +---------------+     +---------------+
+| User Service  |     | Book Service  |     | Bill Service  |
+|    8001       |     |    8002       |     |    8003       |
++---------------+     +---------------+     +---------------+
+
+           ▲
+           |
+     Service Manager
+           |
+    --------------------
+    | Start Services   |
+    | Monitor Services |
+    | Restart Services |
+    | Stop Services    |
+    --------------------
+```
 
 ---
 
@@ -42,318 +103,278 @@ A modern **Book Management System** built with **FastAPI**, featuring a professi
 
 ## Backend
 
-* **Python**
-* **FastAPI**
-* **SQLAlchemy**
-* **Pydantic**
-* **Uvicorn**
+* Python
+* FastAPI
+* SQLAlchemy
+* Pydantic
+* PostgreSQL
+* Async SQLAlchemy
+* Uvicorn
 
 ## Frontend
 
-* **HTML**
-* **CSS**
-* **Vanilla JavaScript**
+* HTML
+* CSS
+* Vanilla JavaScript
+* Jinja2 Templates
 
-## Database
+## Authentication
 
-* SQLite / SQLAlchemy ORM-based database
+* JWT
+* OAuth2 Password Flow
+* Passlib (bcrypt)
 
 ---
 
 # Project Structure
 
-```bash
-book_management/
+```text
+book_management_application/
 │
-├── main.py                 # FastAPI app entry point
-├── models.py               # SQLAlchemy models
-├── schemas.py              # Pydantic schemas
-├── database.py             # Database connection setup
-├── logic.py                # Business logic layer
-├── router/                 # API routes
-│   └── book.py
+├── app/
+│   ├── main.py
+│   ├── service_manager.py
+│   │
+│   ├── routers/
+│   │   ├── view_router.py
+│   │   ├── user_service_routes.py
+│   │   ├── book_service_routes.py
+│   │   └── bill_service_routes.py
+│   │
+│   ├── templates/
+│   └── static/
 │
-├── templates/              # HTML templates (if used)
-│   └── index.html
+├── user_services/
+│   └── app/
+│       ├── main.py
+│       ├── user_routes.py
+│       ├── user_services.py
+│       ├── user_repository.py
+│       ├── user_models.py
+│       ├── user_schema.py
+│       ├── user_database.py
+│       └── security.py
 │
-├── static/                 # Static assets (if used)
+├── book_services/
+│   └── app/
+│       ├── main.py
+│       ├── book_routes.py
+│       ├── book_services.py
+│       ├── book_repository.py
+│       ├── book_models.py
+│       ├── book_schema.py
+│       ├── book_database.py
+│       └── uploads/
 │
-├── books.db                # SQLite database
+├── bill_services/
+│   └── app/
+│       ├── main.py
+│       ├── bill_routes.py
+│       ├── bill_services.py
+│       ├── bill_repository.py
+│       ├── bill_models.py
+│       ├── bill_schema.py
+│       └── bill_database.py
+│
 ├── requirements.txt
-└── README.md
-```
-
-> Your actual folder names may differ slightly depending on how you organized the project.
-
----
-
-# Book Schema
-
-Each book record follows this structure:
-
-```json
-{
-  "id": 1,
-  "title": "Python Basics",
-  "author": "John Smith",
-  "price": 499,
-  "book_type": "hardcopy"
-}
-```
-
-## Fields
-
-* `id` → Unique book ID
-* `title` → Book title
-* `author` → Author name
-* `price` → Price of the book
-* `book_type` → Type of book
-
-## Allowed `book_type` values
-
-* `hardcopy`
-* `softcopy`
-
----
-
-# API Endpoints
-
-## 1. Get Paginated Books
-
-Fetch books with pagination.
-
-**Endpoint**
-
-```http
-GET /book/get_books?page=1&limit=10
-```
-
-### Example Response
-
-```json
-{
-  "items": [
-    {
-      "id": 1,
-      "title": "Python Basics",
-      "author": "John Smith",
-      "price": 499,
-      "book_type": "hardcopy"
-    }
-  ],
-  "page": 1,
-  "limit": 10,
-  "total_pages": 5,
-  "total_items": 48
-}
+├── README.md
+└── .env
 ```
 
 ---
 
-## 2. Add Book
+# Microservices
 
-Add a new book to inventory.
+## API Gateway (Port 8000)
 
-**Endpoint**
+Responsibilities
 
-```http
-POST /book/add_book
-```
-
-### Request Body
-
-```json
-{
-  "title": "FastAPI Guide",
-  "author": "Jane Doe",
-  "price": 599,
-  "book_type": "softcopy"
-}
-```
+* Serves HTML pages
+* Routes frontend requests
+* Proxies API requests
+* Starts all backend services
+* Monitors services
+* Restarts failed services
 
 ---
 
-## 3. Update Book
+## User Service (Port 8001)
 
-Update an existing book.
+Features
 
-**Endpoint**
-
-```http
-PUT /book/update/{book_id}
-```
-
-### Example
-
-```http
-PUT /book/update/1
-```
-
-### Request Body
-
-```json
-{
-  "title": "Updated Book Title",
-  "author": "Updated Author",
-  "price": 699,
-  "book_type": "hardcopy"
-}
-```
+* User Registration
+* Login
+* JWT Token Generation
+* User Authentication
+* Password Encryption
 
 ---
 
-## 4. Delete Book
+## Book Service (Port 8002)
 
-Delete a book from inventory.
+Features
 
-**Endpoint**
-
-```http
-DELETE /book/delete/{book_id}
-```
-
-### Example
-
-```http
-DELETE /book/delete/1
-```
+* Add Book
+* Update Book
+* Delete Book
+* Search Book
+* Pagination
+* Upload Cover Image
+* Upload PDF Document
+* Inventory Statistics
 
 ---
 
-## 5. Search Book
+## Bill Service (Port 8003)
 
-Search books from the backend.
+Features
 
-**Endpoint**
-
-```http
-GET /book/search_book/{search_text}
-```
-
-### Example
-
-```http
-GET /book/search_book/python
-```
+* Checkout Books
+* Create Bills
+* Bill History
+* Purchase Details
+* Quantity Validation
 
 ---
 
-## 6. Get Total Books
+# Databases
 
-Returns total number of books in inventory.
+Each microservice owns its own PostgreSQL database.
 
-**Endpoint**
+| Service      | Database |
+| ------------ | -------- |
+| User Service | user     |
+| Book Service | book     |
+| Bill Service | bill     |
+
+This follows the **Database per Service** pattern commonly used in Microservice Architecture.
+
+---
+
+# API Gateway Routes
+
+The Gateway exposes routes that internally communicate with the appropriate microservice.
+
+Examples:
 
 ```http
-GET /book/get_total_books
+GET    /
+POST   /login
+POST   /register
+
+GET    /books
+POST   /books
+PUT    /books/{id}
+DELETE /books/{id}
+
+POST   /checkout
+GET    /bill/{id}
 ```
 
----
-
-## 7. Get Hard Copy Count
-
-Returns total hardcopy books.
-
-**Endpoint**
-
-```http
-GET /book/get_hard_copies
-```
+The client communicates only with the API Gateway.
 
 ---
 
-## 8. Get Soft Copy Count
+# Service Lifecycle
 
-Returns total softcopy books.
+## Startup
 
-**Endpoint**
+When the API Gateway starts:
 
-```http
-GET /book/get_soft_copies
-```
-
----
-
-# Frontend Dashboard Overview
-
-The Book Management dashboard includes the following sections:
-
-## 1. Header
-
-* App branding / dashboard title
-* Theme toggle for light/dark mode
-
-## 2. Stats Cards
-
-Displays:
-
-* Total Books
-* Hard Copies
-* Soft Copies
-
-## 3. Add Book Section
-
-* Hidden/collapsible add book form
-* Allows adding new books to inventory
-
-## 4. Books Inventory Table
-
-Displays:
-
-* ID
-* Title
-* Author
-* Price
-* Type
-* Actions
-
-### Inventory Table Features
-
-* Professional dashboard-style UI
-* Backend pagination
-* Search integration
-* Edit / Delete actions
-* Empty state handling
-
-## 5. Update Modal
-
-* Edit book details
-* Save updates through backend API
-
-## 6. Delete Confirmation Modal
-
-* Confirm deletion before removing a book
-
-## 7. Toast Notifications
-
-* Success / error feedback for actions
+1. User Service starts.
+2. Book Service starts.
+3. Bill Service starts.
+4. Monitor thread starts.
+5. Gateway becomes available.
 
 ---
 
-# How to Run the Project
+## Runtime
+
+The Service Manager continuously checks whether each service is alive.
+
+If a service crashes:
+
+* Detects the failure.
+* Starts a new instance.
+* Updates the internal process reference.
+* Gateway continues serving requests.
+
+---
+
+## Shutdown
+
+When the API Gateway stops:
+
+1. Monitor thread exits.
+2. User Service stops.
+3. Book Service stops.
+4. Bill Service stops.
+5. Gateway exits cleanly.
+
+---
+
+# Frontend Dashboard
+
+The application includes a responsive dashboard built with:
+
+* HTML
+* CSS
+* Vanilla JavaScript
+* Jinja2
+
+Features include:
+
+* Login Page
+* Registration Page
+* Dashboard
+* Book Inventory
+* Pagination
+* Search
+* Statistics Cards
+* Dark / Light Theme
+* Toast Notifications
+* Responsive Layout
+
+---
+
+# Security
+
+* JWT Authentication
+* OAuth2 Password Bearer
+* Password Hashing using bcrypt
+* Protected API Endpoints
+
+---
+
+# Running the Project
 
 ## 1. Clone the Repository
 
 ```bash
-git clone <your-repo-url>
-cd book_management
+git clone <repository-url>
+cd book_management_application
 ```
 
-## 2. Create and Activate Virtual Environment
+---
+
+## 2. Create Virtual Environment
 
 ### macOS / Linux
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
 ### Windows
 
 ```bash
-python -m venv venv
-venv\Scripts\activate
+python -m venv .venv
+.venv\Scripts\activate
 ```
+
+---
 
 ## 3. Install Dependencies
 
@@ -361,148 +382,57 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## 4. Run the FastAPI Server
+---
+
+## 4. Configure Environment Variables
+
+Create a `.env` file with your PostgreSQL credentials and application settings.
+
+Example:
+
+```env
+USER_DB_URL=postgresql+asyncpg://username:password@localhost:5432/user
+BOOK_DB_URL=postgresql+asyncpg://username:password@localhost:5432/book
+BILL_DB_URL=postgresql+asyncpg://username:password@localhost:5432/bill
+
+SECRET_KEY=your_secret_key
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+```
+
+---
+
+## 5. Start the Application
+
+Only the API Gateway needs to be started.
 
 ```bash
-uvicorn main:app --reload
+uvicorn book_management_application.app.main:app
 ```
 
-## 5. Open in Browser
+The gateway automatically starts:
 
-Visit:
-
-```bash
-http://127.0.0.1:8000/
-```
-
-or the route where your HTML dashboard is served.
-
----
-
-# Example `requirements.txt`
-
-```txt
-fastapi
-uvicorn
-sqlalchemy
-jinja2
-pydantic
-python-multipart
-```
-
-> Add/remove packages depending on your actual project setup.
-
----
-
-# Pagination Behavior
-
-The inventory table uses **backend pagination**.
-
-## Normal Mode
-
-When no search is active:
-
-* Books load using:
-
-  ```http
-  GET /book/get_books?page=1&limit=10
-  ```
-* Pagination controls show:
-
-  * Prev
-  * Next
-  * Page buttons
-  * Ellipsis when needed
-* Summary example:
-
-  * `Showing 1–10 of 48 books`
-
-## Search Mode
-
-When search text is entered:
-
-* Books load using:
-
-  ```http
-  GET /book/search_book/{search_text}
-  ```
-* Results are shown in the same inventory table
-* Pagination controls are hidden or disabled
-* Summary example:
-
-  * `Found 4 matching books`
-
----
-
-# Search Functionality
-
-The inventory section includes backend-powered search.
-
-## Search Behavior
-
-* User enters text in the search bar
-* Frontend calls:
-
-  ```http
-  /book/search_book/{search_text}
-  ```
-* Matching books are rendered in the same table
-* Clearing the search restores normal paginated inventory mode
-
----
-
-# CRUD Flow Summary
-
-## Add Book
-
-1. Click **Add Book**
-2. Fill in title, author, price, and book type
-3. Submit form
-4. Book is added via backend API
-5. Stats and table refresh
-
-## Update Book
-
-1. Click **Edit** on a book row
-2. Update values in the modal
-3. Save changes
-4. Backend updates the record
-5. Stats and table refresh
-
-## Delete Book
-
-1. Click **Delete**
-2. Confirm deletion
-3. Backend deletes the book
-4. Stats and table refresh
-
----
-
-# UI Highlights
-
-* Clean admin dashboard layout
-* Modern inventory table
-* Search + pagination integration
-* Responsive design
-* Dark mode support
-* Consistent buttons, modals, and forms
-* Simple and professional styling
+* User Service (8001)
+* Book Service (8002)
+* Bill Service (8003)
 
 ---
 
 # Future Improvements
 
-Possible enhancements for the project:
-
-* Authentication / login system
-* Role-based access (Admin / Staff)
-* Book category support
-* Sorting by price / title / author
-* Export inventory to CSV / Excel
-* Filter by book type
-* Advanced search with multiple fields
-* Book cover image support
-* Better analytics dashboard
+* Docker Support
+* Docker Compose
+* Redis Caching
+* RabbitMQ / Kafka
+* Service Discovery
+* Health Check Endpoints
+* API Rate Limiting
+* Circuit Breaker Pattern
+* Distributed Logging
+* Prometheus Monitoring
+* Grafana Dashboard
+* Kubernetes Deployment
+* CI/CD Pipeline
 
 ---
 
@@ -514,5 +444,6 @@ Possible enhancements for the project:
 
 # License
 
-This project is for learning / academic / portfolio use.
-You can update the license section based on your preference, for example **MIT License**.
+This project is intended for educational, learning, and portfolio purposes.
+
+You may modify and use this project for personal or academic work.
