@@ -1,7 +1,7 @@
-from pydantic import Field
-from ai_based_knowledge_services.app.knowledge_model import KnowledgeModel
+from pydantic import Field, BaseModel
+from datetime import datetime
 
-class PdfUploads:
+class PdfUploads(BaseModel):
     filename : str = Field(..., min_length=1, max_length=100)
     stored_filename: str
     filepath: str = Field(...)
@@ -12,8 +12,9 @@ class PdfUploads:
     creator: str
     producer: str
     content: str = Field(...)
-    uploaded_at: str = Field(...)
-class PdfUploads:
+    uploaded_at: datetime = Field(...)
+    
+class PdfResponse(BaseModel):
     id: int
     filename : str
     stored_filename: str
@@ -25,4 +26,4 @@ class PdfUploads:
     creator: str
     producer: str
     content: str
-    uploaded_at: str
+    uploaded_at: datetime
