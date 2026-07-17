@@ -7,7 +7,7 @@ from ai_based_knowledge_services.app.knowledge_config import settings
 engine = create_async_engine(
     settings.DATABASE_URL,
     echo= True,
-    pool_pin_ping=True,
+    pool_pre_ping=True,
     poolclass = NullPool
     )
 
