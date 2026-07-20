@@ -5,7 +5,8 @@ from book_services.tests.get_token import get_token
 @pytest.mark.asyncio
 async def test_reduce_stock_quantity(client):
     token = await get_token()
-    response = await client.patch("/book/reduce_book_stock?book_id=2&quantity=1",
+    id = await client.get("/book/get_book_id", headers={"Authorization": f"bearer {token}"})
+    response = await client.patch(f"/book/reduce_book_stock?book_id={id.json()}&quantity=1",
                                   headers={"Authorization": f"bearer {token}"})
     assert response.status_code == 200
 

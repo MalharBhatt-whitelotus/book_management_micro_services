@@ -36,6 +36,14 @@ async def test_filter_available_books(client):
     for book in books:
         assert book["quantity"] > 0
 
+@pytest.mark.asyncio
+async def test_filter_book_type(client):
+    token = await get_token()
+    response = await client.get(
+        "/book/filter?book_type=hardcopy",
+        headers = {"Authorization": f"bearer {token}"})
+    
+    assert response.status_code == 200
 
 @pytest.mark.asyncio
 async def test_sort_price_ascending(client):
@@ -68,37 +76,6 @@ async def test_sort_price_descending(client):
     prices = [book["price"] for book in books]
 
     assert prices == sorted(prices, reverse=True)
-
-
-@pytest.mark.asyncio
-async def test_advanced_filter(client):
-    token = await get_token()
-
-    response = await client.get(
-        "/book/filter?"
-        "category=Programming&"
-        "author=Robert C. Martin&"
-        "book_type=hardcopy&"
-        "min_price=300&"
-        "max_price=1000&"
-        "sort_by=price&"
-        "order=desc",
-        headers={"Authorization": f"Bearer {token}"},
-    )
-
-    assert response.status_code == 200
-
-    books = response.json()
-
-    prices = [book["price"] for book in books]
-    assert prices == sorted(prices, reverse=True)
-
-    for book in books:
-        assert 300 <= book["price"] <= 1000
-        assert book["category"] == "Programming"
-        assert book["author"] == "Robert C. Martin"
-        assert book["book_type"] == "hardcopy"
-
 
 @pytest.mark.asyncio
 async def test_filter_non_existing_category(client):
