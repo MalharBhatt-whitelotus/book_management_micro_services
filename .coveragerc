@@ -5,3 +5,4 @@ omit =
     */seed_data.py
     */admin_insert.py
     */security.py
+    */util_test.py

@@ -14,4 +14,3 @@ class RoleChecker:
         if user_role in self.allowed_role:
             return True
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
-    

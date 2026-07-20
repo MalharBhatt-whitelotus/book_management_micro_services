@@ -54,3 +54,13 @@ async def get_all_bills(
     Admin-only: get all bills/orders
     """
     return await BillsService.get_all_bills(db)
+
+@bill_router.get("/get_bill_by_id/{bill_id}")
+async def get_bill_by_id(
+    bill_id: int,
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Admin-only: get all bills/orders
+    """
+    return await BillsService.get_bill_by_id(db,bill_id)

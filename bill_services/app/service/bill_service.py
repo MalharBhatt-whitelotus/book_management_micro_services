@@ -26,11 +26,6 @@ class BillsService:
         6. Return bill summary
         """
         current_user = await UserClient.get_current_user(authorization)
-        if not checkout_data.items:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="No books selected for checkout"
-            )
 
         order_group = f"ORD-{uuid.uuid4().hex[:10].upper()}"
         bill_rows: List[Bill] = []
@@ -40,24 +35,12 @@ class BillsService:
             for item in checkout_data.items:
                 book = await BookClient.get_book_by_id(item.book_id)
 
-                if not book:
-                    raise HTTPException(
-                        status_code=status.HTTP_404_NOT_FOUND,
-                        detail=f"Book with id {item.book_id} not found"
-                    )
-
-                if item.quantity <= 0:
-                    raise HTTPException(
-                        status_code=status.HTTP_400_BAD_REQUEST,
-                        detail=f"Quantity for book '{book["title"]}' must be greater than zero"
-                    )
-
                 if book["quantity"] < item.quantity:
                     raise HTTPException(
                         status_code=status.HTTP_400_BAD_REQUEST,
                         detail=(
                             f"Insufficient stock for '{book["title"]}'. "
-                            f"Available: {book["qauntity"]}, requested: {item.quantity}"
+                            f"Available: {book["quantity"]}, requested: {item.quantity}"
                         )
                     )
 
