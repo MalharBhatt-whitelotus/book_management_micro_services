@@ -34,6 +34,14 @@ def extract_text(file):
 
 @staticmethod
 def get_file_size(file_path):
-     size = os.path.getsize(file_path)
-     size_mb = round((1024*1024),2)
-     return size_mb
+    size = os.path.getsize(file_path)
+    size_mb = round((1024*1024),2)
+    return size_mb
+
+@staticmethod
+def delete_file_from_dir(filename: str):
+    filepath = os.path.join(settings.UPLOADS_DIR, filename)
+    if filepath:
+        os.remove(filepath)
+        return True
+    else : return False

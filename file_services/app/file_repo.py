@@ -39,6 +39,18 @@ async def create_file(
     
     return file
 
-async def get_summery(db):
-    summery = await db.execute(select(PdfDetails))
-    return summery.scalars().all()
+async def get_summery(file_id: int, db: AsyncSession):
+    summery = await db.execute(select(PdfDetails).where(PdfDetails.id == file_id))
+    return summery.scalar_one_or_none()
+
+async def get_file_list(db: AsyncSession):
+    result = await db.execute(select(PdfDetails))
+    file_list = result.scalars().all()
+    return file_list
+
+async def delete_file_by_id(file_id: int, db: AsyncSession):
+    result = await db.execute(select(PdfDetails).where(PdfDetails.id == file_id))
+    file = result.scalar_one_or_none()
+    db.delete(file)
+    db.commit()
+    return file

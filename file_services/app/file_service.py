@@ -1,5 +1,5 @@
 from datetime import datetime
-from fastapi import UploadFile
+from fastapi import UploadFile, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 import file_services.app.utils as utils
@@ -34,9 +34,23 @@ async def process_pdf(file: UploadFile, db: AsyncSession):
         
         return file
    
-async def get_summery(db):
-       summery = await repo.get_summery(db)
+async def get_summery(field_id: int, db: AsyncSession):
+       summery = await repo.get_summery(field_id, db)
        return summery
+
+async def get_file_list(db: AsyncSession):
+    return await repo.get_file_list(db)
+
+async def delete_file_by_id(file_id: int, db: AsyncSession):
+    result_from_database = await repo.delete_file_by_id(file_id, db)
+    result_from_utils = utils.delete_file_from_dir(result_from_database["stored_filename"])
+    if not result_from_database or not result_from_utils:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT)
+    return {
+         "result_from_database": result_from_database,
+         "result_from_utils" : result_from_utils
+         }
+
 
 # async def ask_query(query: str, db: AsyncSession):
 #     pdfs = await get_summery(db)
