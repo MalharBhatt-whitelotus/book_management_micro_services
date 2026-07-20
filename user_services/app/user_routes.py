@@ -11,15 +11,6 @@ user_router = APIRouter(prefix="/user", tags=["users"])
 
 from sqlalchemy import text
 
-
-# @user_router.get("/test-db")
-# async def test_db(db: AsyncSession = Depends(get_db)):
-#     result = await db.execute(text("SELECT current_database();"))
-
-#     return {
-#         "database": result.scalar()
-#     }
-
 @user_router.post("/registration", response_model=UserRead, status_code=status.HTTP_201_CREATED)
 async def register_user(user_data: UserRegister, db: AsyncSession = Depends(get_db)):
     """
@@ -44,3 +35,15 @@ async def get_my_profile(current_user: User = Depends(get_current_user)):
     print("Reached /me")
     print(current_user)
     return await UserService.get_user_profile(current_user)
+
+@user_router.get("/get_all", response_model=list[UserRead])
+async def get_all_user(db: AsyncSession = Depends(get_db)):
+    return await UserService.get_all_user(db)
+
+@user_router.get("/get_user_by_id/{user_id}", response_model=UserRead)
+async def get_user_by_id(user_id: int, db: AsyncSession = Depends(get_db)):
+    return await UserService.get_user_by_id(db, user_id)
+
+@user_router.get("/get_user_by_username_or_email/{value}", response_model=UserRead)
+async def get_user_by_username_or_email(value: str, db: AsyncSession = Depends(get_db)):
+    return await UserService.get_user_by_username_or_email(db, value)

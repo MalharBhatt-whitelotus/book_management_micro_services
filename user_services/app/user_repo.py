@@ -40,7 +40,7 @@ class UserRepository:
     async def get_all_users(db: AsyncSession) -> List[User]:
         result = await db.execute(select(User).order_by(User.id.desc()))
         return result.scalars().all()
-
+        
     @staticmethod
     async def get_user_by_id(db: AsyncSession, user_id: int) -> Optional[User]:
         result = await db.execute(select(User).where(User.id == user_id))
