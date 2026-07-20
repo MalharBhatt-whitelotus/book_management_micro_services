@@ -9,6 +9,7 @@ users, books, bills, and AI-powered knowledge retrieval.
 
 ### Microservices
 
+```
   -----------------------------------------------------------------------
   Service              Port          Responsibility
   -------------------- ------------- ------------------------------------
@@ -25,6 +26,7 @@ users, books, bills, and AI-powered knowledge retrieval.
   AI Knowledge Service 8004          PDF ingestion and AI question
                                      answering
   -----------------------------------------------------------------------
+```
 
 ## Features
 
