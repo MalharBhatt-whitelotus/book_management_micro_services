@@ -1,12 +1,17 @@
 from typing import List, Optional
-from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi import APIRouter, Depends, Query, status
 
 from book_services.app.book_database import get_db
-from book_services.app.book_schema import BookCreate, BookUpdate, BookRead
 from book_services.app.book_service import BookService
+from book_services.app.services.role_checker_service import RoleChecker
+from book_services.app.book_schema import BookCreate, BookUpdate, BookRead
 
 book_router = APIRouter(prefix="/book", tags=["books"])
+
+admin_role_only = RoleChecker(["admin"])
+user_role_only = RoleChecker(["user"])
+admin_user_role = RoleChecker(["admin,user"])
 
 @book_router.get("/get", response_model=List[BookRead])
 async def get_books(
@@ -61,7 +66,8 @@ async def get_book_by_id(book_id: int, db: AsyncSession = Depends(get_db)):
 @book_router.post("/create", response_model=BookRead, status_code=status.HTTP_201_CREATED)
 async def create_book(
     book_data: BookCreate,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    current_user = Depends(admin_role_only)
 ):
     """
     Admin-only: create book
@@ -73,7 +79,9 @@ async def create_book(
 async def update_book(
     book_id: int,
     update_data: BookUpdate,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    current_user = Depends(admin_role_only)
+
 ):
     """
     Admin-only: update book
@@ -84,7 +92,8 @@ async def update_book(
 @book_router.delete("/delete/{book_id}")
 async def delete_book(
     book_id: int,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    current_user:AsyncSession = Depends(admin_role_only)
 ):
     """
     Admin-only: delete book

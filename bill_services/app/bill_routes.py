@@ -6,7 +6,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from bill_services.app.bill_database import get_db
 from bill_services.app.bill_schema import CheckoutRequest, BillResponse
 from bill_services.app.service.bill_service import BillsService
-from bill_services.app.service.user_client import UserClient
 bill_router = APIRouter(prefix="/bill",tags=["bills"])
 
 
