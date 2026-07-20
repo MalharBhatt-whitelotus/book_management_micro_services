@@ -12,18 +12,6 @@ class BookService:
 
     @staticmethod
     async def create_book(db: AsyncSession, book_data: BookCreate):
-        # if book_data.quantity < 0:
-        #     raise HTTPException(
-        #         status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
-        #         detail="Quantity cannot be negative"
-        #     )
-
-        # if book_data.price <= 0:
-        #     raise HTTPException(
-        #         status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
-        #         detail="Price must be greater than zero"
-        #     )
-
         return await BookRepository.create_book(db, book_data)
 
     @staticmethod
@@ -56,18 +44,6 @@ class BookService:
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail=f"Book with id {book_id} not found"
             )
-
-        # if update_data.quantity is not None and update_data.quantity < 0:
-        #     raise HTTPException(
-        #         status_code=status.HTTP_400_BAD_REQUEST,
-        #         detail="Quantity cannot be negative"
-        #     )
-
-        # if update_data.price is not None and update_data.price <= 0:
-        #     raise HTTPException(
-        #         status_code=status.HTTP_400_BAD_REQUEST,
-        #         detail="Price must be greater than zero"
-        #     )
 
         return await BookRepository.update_book(db, book, update_data)
 
@@ -126,6 +102,10 @@ class BookService:
             order=order
             )
     
+    @staticmethod
+    async def get_book_id(db: AsyncSession):
+        return await BookRepository.get_book_id(db)
+        
     @staticmethod
     async def reduce_book_stock(db: AsyncSession, id: int, quantity: int):
         book = await BookRepository.get_book_by_id(db, id)

@@ -7,9 +7,6 @@ class RoleChecker:
     
     async def __call__(self,authorization:str = Header(..., alias="Authorization")):
         current_user = await UserClient.get_current_user(authorization)
-        print("Current User:", current_user)
-        print("Allowed Roles:", self.allowed_role)
-
         user_role = current_user["role"]
         if user_role in self.allowed_role:
             return True

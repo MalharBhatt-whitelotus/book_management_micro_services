@@ -100,6 +100,14 @@ async def delete_book(
     """
     return await BookService.delete_book(db, book_id)
 
+@book_router.get("/get_book_id")
+async def get_book_id(db: AsyncSession = Depends(get_db),
+                      current_user: AsyncSession = Depends(admin_role_only)):
+    """
+    Admin-only: get book_id
+    """
+    return await BookService.get_book_id(db)
+
 @book_router.patch("/reduce_book_stock")
 async def reduce_book_stock(book_id: int, quantity: int, db: AsyncSession = Depends(get_db)):
     return await BookService.reduce_book_stock(db, book_id, quantity)

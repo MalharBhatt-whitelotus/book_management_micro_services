@@ -130,3 +130,9 @@ class BookRepository:
         result = await db.execute(query)
 
         return result.scalars().all()
+    
+    @staticmethod
+    async def get_book_id(db: AsyncSession):
+        result = await db.execute(select(Book).order_by(Book.id.asc()).limit(1))
+        book = result.scalar_one_or_none()
+        return book.id
