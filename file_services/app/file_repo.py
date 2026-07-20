@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy import select,Text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ai_based_knowledge_services.app.knowledge_model import PdfDetails
+from file_services.app.file_model import PdfDetails
 
 async def create_file(
         filename: str,

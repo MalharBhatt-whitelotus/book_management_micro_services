@@ -2,7 +2,7 @@ from sqlalchemy.pool import NullPool
 from sqlalchemy.orm import declarative_base, sessionmaker
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 
-from ai_based_knowledge_services.app.knowledge_config import settings
+from file_services.app.file_config import settings
 
 engine = create_async_engine(
     settings.DATABASE_URL,

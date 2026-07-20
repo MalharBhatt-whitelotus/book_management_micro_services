@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Integer, DateTime, Text
 
-from ai_based_knowledge_services.app.knowledge_database import Base
+from file_services.app.file_database import Base
 
 class PdfDetails(Base):
     __tablename__ = "pdf_details"

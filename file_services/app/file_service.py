@@ -2,9 +2,9 @@ from datetime import datetime
 from fastapi import UploadFile
 from sqlalchemy.ext.asyncio import AsyncSession
 
-import ai_based_knowledge_services.app.utils as utils
-import ai_based_knowledge_services.app.knowledge_repo as repo
-from ai_based_knowledge_services.app.ai.ai_service import AIService
+import file_services.app.utils as utils
+import file_services.app.file_repo as repo
+# from file_services.app.ai.ai_service import AIService
 
 async def process_pdf(file: UploadFile, db: AsyncSession):
     # save file
@@ -39,31 +39,31 @@ async def get_summery(db):
        summery = await repo.get_summery(db)
        return summery
 
-async def ask_query(query: str, db: AsyncSession):
-    pdfs = await get_summery(db)
+# async def ask_query(query: str, db: AsyncSession):
+#     pdfs = await get_summery(db)
 
-    context = ""
+#     context = ""
 
-    for pdf in pdfs:
-        context += f"""
-Document ID: {pdf.id}
-Filename: {pdf.filename}
-Stored Filename: {pdf.stored_filename}
-File Path: {pdf.filepath}
-File Size: {pdf.file_size} bytes
-Page Count: {pdf.page_count}
-Title: {pdf.title}
-Author: {pdf.author}
-Creator: {pdf.creator}
-Producer: {pdf.producer}
-Uploaded At: {pdf.uploaded_at}
+#     for pdf in pdfs:
+#         context += f"""
+# Document ID: {pdf.id}
+# Filename: {pdf.filename}
+# Stored Filename: {pdf.stored_filename}
+# File Path: {pdf.filepath}
+# File Size: {pdf.file_size} bytes
+# Page Count: {pdf.page_count}
+# Title: {pdf.title}
+# Author: {pdf.author}
+# Creator: {pdf.creator}
+# Producer: {pdf.producer}
+# Uploaded At: {pdf.uploaded_at}
 
-Content:
-{pdf.content}
+# Content:
+# {pdf.content}
 
-==================================================
-"""
+# ==================================================
+# """
 
-    response = await AIService.ask_query(query, context)
+#     response = await AIService.ask_query(query, context)
 
-    return {"response": response}
+#     return {"response": response}

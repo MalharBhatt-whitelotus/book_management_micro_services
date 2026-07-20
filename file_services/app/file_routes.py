@@ -1,9 +1,9 @@
 from fastapi import APIRouter, BackgroundTasks, HTTPException, status, UploadFile, File, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ai_based_knowledge_services.app.knowledge_database import get_db
-import ai_based_knowledge_services.app.knowledge_service as service
-from ai_based_knowledge_services.app.knowledge_schema import PdfUploads, PdfResponse
+import file_services.app.file_service as service
+from file_services.app.file_database import get_db
+from file_services.app.file_schema import PdfUploads, PdfResponse
 
 router = APIRouter(prefix="/ai", tags=["ai"])
 

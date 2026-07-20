@@ -5,7 +5,7 @@ import shutil
 import pymupdf
 
 from fastapi import UploadFile
-from ai_based_knowledge_services.app.knowledge_config import settings
+from file_services.app.file_config import settings
 
 @staticmethod
 def save_file(file: UploadFile):

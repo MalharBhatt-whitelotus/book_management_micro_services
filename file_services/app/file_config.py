@@ -3,7 +3,7 @@ from pydantic_settings import SettingsConfigDict, BaseSettings
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-class KnowledgeSettings(BaseSettings):
+class FileSettings(BaseSettings):
     APP_NAME: str
     APP_VERSION: str
     
@@ -21,4 +21,4 @@ class KnowledgeSettings(BaseSettings):
         extra = "ignore"
         )
 
-settings = KnowledgeSettings()
+settings = FileSettings()
