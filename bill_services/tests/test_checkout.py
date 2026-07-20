@@ -1,14 +1,14 @@
 import pytest
-
+import httpx
 from bill_services.tests.get_token import get_token
-
 @pytest.mark.asyncio
-async def test_checkout(client):
-    token = await get_token()
-    payload = {"items":[{"book_id": 4, "quantity": 1}]}
+async def test_checkout(client, external_client):
+    token = await get_token()       
+    id_reponse = await external_client.get("/book/get_book_id", headers={"Authorization": f"bearer {token}"})
+    assert id_reponse.status_code == 200
+    book_id = id_reponse.json()
+    payload = {"items":[{"book_id": book_id, "quantity": 1}]}
     response = await client.post("/bill/checkout",json=payload, headers={"Authorization": f"bearer {token}"})
-    # print("Status:", response.status_code)
-    # print("Response:", response.text)
     assert response.status_code == 201
     result = response.json()
     assert result["total_amount"]> 0    
