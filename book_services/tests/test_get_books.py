@@ -19,9 +19,10 @@ async def test_get_books_by_keyword(client):
 @pytest.mark.asyncio
 async def test_get_book_by_id(client):
     token = await get_token()
-
+    id_response = await client.get("/book/get_book_id", headers={"Authorization": f"bearer {token}"})
+    book_id = id_response.json()
     response = await client.get(
-        f"/book/get_book_by_id/21",
+        f"/book/get_book_by_id/{book_id}",
         headers={"Authorization": f"Bearer {token}"}
     )
 
@@ -29,7 +30,7 @@ async def test_get_book_by_id(client):
 
     book = response.json()
 
-    assert book["id"] == 21
+    assert book["id"] == book_id
 
 @pytest.mark.asyncio
 async def test_get_book_by_invalid_id(client):

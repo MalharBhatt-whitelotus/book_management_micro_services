@@ -8,7 +8,5 @@ class UserClient:
     async def get_current_user(authorization: str):
         async with httpx.AsyncClient() as client:
             response = await client.get(f"{UserClient.API_CALL}/me",headers={"Authorization": authorization})
-            print(response.status_code)
-            print(response.json())
             response.raise_for_status()
             return response.json()

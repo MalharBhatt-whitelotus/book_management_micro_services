@@ -18,18 +18,15 @@ async def test_book_bot_found_checkout(client):
     token = await get_token()
     payload = {"items":[{"book_id": 999999, "quantity": 1}]}
     response = await client.post("/bill/checkout",json=payload,headers={"Authorization":f"bearer {token}"})
-    print(response.status_code)
-    print(response.json())
     assert response.status_code == 404
 
 @pytest.mark.asyncio
-async def test_book_insufficient_checkout(client):
+async def test_book_insufficient_checkout(client, external_client):
     token = await get_token()
-    payload = {"items":[{"book_id": 10, "quantity": 1000}]}
+    id_response = await external_client.get("/book/get_book_id", headers = {"Authorization": f"bearer {token}"})
+    book_id = id_response.json()
+    payload = {"items":[{"book_id": book_id, "quantity": 1000}]}
     response = await client.post("/bill/checkout",json=payload,headers={"Authorization":f"bearer {token}"})
-    print(response.status_code)
-    print(response.text)
-    print(response.json())
     assert response.status_code == 400
 
 from unittest.mock import AsyncMock, patch

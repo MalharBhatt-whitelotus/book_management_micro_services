@@ -11,9 +11,6 @@ class UserClient:
                 }
             )
 
-            print(response.status_code)
-            print(response.text)
-
             response.raise_for_status()
 
             return response.json()

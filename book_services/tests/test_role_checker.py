@@ -16,5 +16,4 @@ async def test_role_checker(client):
         "book_type":"hardcopy"
     }
     response = await client.post("/book/create",json = payload, headers= {"Authorization": f"bearer {token}"})
-    print(response.json())
     assert response.status_code == 403

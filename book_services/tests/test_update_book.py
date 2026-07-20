@@ -6,9 +6,10 @@ from book_services.tests.get_token import get_token
 @pytest.mark.asyncio
 async def test_update_book(client):
     token = await get_token()
-
+    id_response = await client.get("/book/get_book_id", headers={"Authorization": f"bearer {token}"})
+    book_id = id_response.json()
     response = await client.put(
-        "/book/update/21",
+        f"/book/update/{book_id}",
         json={
         "title": "Book21",
         "author": "Someone21",
