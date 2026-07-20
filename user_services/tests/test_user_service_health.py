@@ -1,0 +1,16 @@
+import pytest
+
+from user_services.app.user_config import settings
+from user_services.tests.get_token import get_token
+
+@pytest.mark.asyncio
+async def test_user_service_health(client):
+    token = await get_token()
+    response = await client.get("/health",headers={"Authorization": f"bearer {token}"})
+    assert response.status_code == 200
+
+    assert response.json() == {
+        "status": "ok",
+        "app": settings.APP_NAME,
+        "version": settings.APP_VERSION
+    }
