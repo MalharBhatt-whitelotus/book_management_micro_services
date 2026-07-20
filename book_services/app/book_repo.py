@@ -77,8 +77,6 @@ class BookRepository:
         Assumes stock validation already happened in service layer.
         """
         book = await BookRepository.get_book_by_id(db, book_id)
-        if not book:
-            return None
         book.quantity -= quantity
         await db.commit()
         await db.refresh(book)
