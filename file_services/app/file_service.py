@@ -4,7 +4,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 import file_services.app.utils as utils
 import file_services.app.file_repo as repo
-# from file_services.app.ai.ai_service import AIService
 
 async def process_pdf(file: UploadFile, db: AsyncSession):
     # save file

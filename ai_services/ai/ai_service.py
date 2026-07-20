@@ -1,5 +1,5 @@
 from google.genai import types
-from file_services.app.ai.gemai_client import client
+from ai_services.ai.gemai_client import client
 
 class AIService:
 
