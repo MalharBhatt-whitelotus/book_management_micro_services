@@ -21,3 +21,7 @@ def user_dashboard(request:Request):
 @view_routes.get("/file_dashboard", response_class=HTMLResponse)
 def file_dashboard(request: Request):
     return templates.TemplateResponse(request=request, name="file_upload_dashboard.html")
+
+@view_routes.get("/media_dashboard", response_class=HTMLResponse)
+def file_dashboard(request: Request):
+    return templates.TemplateResponse(request=request, name="media_upload_dashboard.html")

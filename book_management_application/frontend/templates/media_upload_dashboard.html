@@ -1144,7 +1144,7 @@
                     <svg style="width:18px;height:18px;" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
                     </svg>
-                    <span>Upload File</span>
+                    <span>Upload Media</span>
                 </button>
             </div>
         </header>
@@ -1164,7 +1164,7 @@
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M8 7v12m0 0l-4-4m4 4l4-4m0 6V7m0 0l-4 4m4-4l4 4m5-3V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                     </svg>
-                    <span class="sidebar-item-text-label">Files Catalog</span>
+                    <span class="sidebar-item-text-label">Medias Catalog</span>
                 </button>
                 <button class="sidebar-item" onclick="switchSidebarSection('ai-assistant-anchor')">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -1213,7 +1213,7 @@
                     </div>
                     <div class="stat-card">
                         <div class="stat-header">
-                            <span>Last Uploaded File</span>
+                            <span>Last Uploaded Media</span>
                             <div class="stat-icon-wrapper">
                                 <svg style="width:18px;height:18px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </div>
@@ -1230,17 +1230,17 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"></path>
                         </svg>
                         <div class="dropzone-text">
-                            <h4>Drag & Drop File to Knowledge Deck</h4>
-                            <p>Supports compiled PDF and raw text (.txt) file architectures</p>
+                            <h4>Drag & Drop Media to Knowledge Deck</h4>
+                            <p>Supports compiled Media architectures</p>
                         </div>
-                        <input type="file" id="hidden-file-input-node" accept=".pdf,.txt" style="display: none;">
+                        <input type="file" id="hidden-file-input-node" accept=".mp3,.mp4,.png,.wav" style="display: none;">
                         <button class="btn btn-secondary btn-sm" type="button">Browse Local Disk</button>
                     </div>
 
                     <!-- Dynamic Visual Action Loading Area -->
                     <div class="upload-status-box" id="upload-status-tracking-panel">
                         <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 500;">
-                            <span id="uploading-file-name-label">document.pdf</span>
+                            <span id="uploading-file-name-label">Media</span>
                             <span id="upload-percentage-readout">0%</span>
                         </div>
                         <div class="progress-bar-container">
@@ -1265,8 +1265,8 @@
                         <svg class="empty-state-svg" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"></path>
                         </svg>
-                        <h3 class="empty-state-title">No Files Uploaded Yet</h3>
-                        <p class="empty-state-subtitle">Upload your first PDF or TXT document to start using AI-powered document analysis.</p>
+                        <h3 class="empty-state-title">No Medias Uploaded Yet</h3>
+                        <p class="empty-state-subtitle">Upload your first Media to start using AI-powered media analysis.</p>
                         <button class="btn btn-primary btn-sm" onclick="scrollToUploadSection()">Upload First Asset</button>
                     </div>
 
@@ -1274,10 +1274,10 @@
                         <table class="enterprise-table" id="knowledge-data-table-node">
                             <thead>
                                 <tr>
-                                    <th onclick="handleTableSortIntent('fileid')">File ID <span class="sort-indicator" id="sort-fileid"></span></th>
-                                    <th onclick="handleTableSortIntent('filename')">Filename <span class="sort-indicator" id="sort-filename"></span></th>
+                                    <th onclick="handleTableSortIntent('fileid')">Media ID <span class="sort-indicator" id="sort-fileid"></span></th>
+                                    <th onclick="handleTableSortIntent('filename')">Medianame <span class="sort-indicator" id="sort-filename"></span></th>
                                     <th onclick="handleTableSortIntent('stored_filename')">Stored Name <span class="sort-indicator" id="sort-stored_filename"></span></th>
-                                    <th onclick="handleTableSortIntent('filepath')">File Path <span class="sort-indicator" id="sort-filepath"></span></th>
+                                    <th onclick="handleTableSortIntent('filepath')">Media Path <span class="sort-indicator" id="sort-filepath"></span></th>
                                     <th onclick="handleTableSortIntent('filesize')">Size <span class="sort-indicator" id="sort-filesize"></span></th>
                                     <th onclick="handleTableSortIntent('uploaded_at')">Uploaded At <span class="sort-indicator" id="sort-uploaded_at"></span></th>
                                     <th style="cursor: default;">Actions</th>
@@ -1305,13 +1305,13 @@
                         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 21l4.314-1.242m-3.5 1.455c-1.314-.407-2.314-1.407-2.721-2.721L3 13.786l4.314-1.242m3.5 1.455c.407 1.314 1.407 2.314 2.721 2.721L18 17.214l-4.314 1.242M10.5 10.5a3 3 0 11-6 0 3 3 0 016 0zm10.5 0a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
-                        <span>Ask AI About Uploaded Documents</span>
+                        <span>Ask AI About Uploaded Medias</span>
                     </h3>
 
                     <!-- Message Feed Layout Frame -->
                     <div class="ai-chat-history-viewport" id="ai-chat-history-output-canvas">
                         <div class="chat-bubble chat-bubble-ai">
-                            Hello! I am your Enterprise AI Assistant. Ask any question regarding your currently compiled knowledge files stack above.
+                            Hello! I am your Enterprise AI Assistant. Ask any question regarding your currently compiled knowledge medias stack above.
                         </div>
                     </div>
 
@@ -1350,7 +1350,7 @@
     <div class="modal-overlay-shroud" id="modal-file-viewer-wrapper">
         <div class="modal-window-container">
             <div class="modal-header-bar">
-                <h3 class="modal-title-text" id="view-modal-filename-header">file_name.pdf</h3>
+                <h3 class="modal-title-text" id="view-modal-filename-header">media_name.pdf</h3>
                 <button class="modal-close-button" onclick="closeModal('modal-file-viewer-wrapper')">
                     <svg style="width:20px;height:20px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
@@ -1361,7 +1361,7 @@
                 </div>
                 <div style="margin-top: 20px;">
                     <div class="meta-card-label" style="margin-bottom: 8px;">Extracted Content</div>
-                    <pre class="extracted-text-pre-viewport" id="view-modal-extracted-text-raw-target">Loading file internal content fields...</pre>
+                    <pre class="extracted-text-pre-viewport" id="view-modal-extracted-text-raw-target">Loading media internal content fields...</pre>
                 </div>
             </div>
             <div class="modal-footer-action-bar">
@@ -1409,7 +1409,7 @@
                 </button>
             </div>
             <div class="modal-scrollable-content" style="padding-top:10px; font-size:0.95rem; line-height:1.4; color:var(--text-muted);" id="modal-confirmation-message-body-label">
-                Are you sure you want to permanently delete this file?
+                Are you sure you want to permanently delete this media?
             </div>
             <div class="modal-footer-action-bar" style="border-top:none; background:transparent;">
                 <button class="btn btn-secondary btn-sm" onclick="closeModal('modal-action-confirmation-dialog')">Cancel</button>
@@ -1527,7 +1527,7 @@
             setTimeout(() => {
                 node.classList.add("toast-fade-out");
                 node.addEventListener("transitionend", () => node.remove());
-            }, 4000);
+            }, 4);
         }
 
         /* ────────────────────────────────────────────────────────
@@ -1597,7 +1597,7 @@
         async function loadFiles() {
             showLoader();
             try {
-                const response = await fetch(`${API_BASE}/file/list`);
+                const response = await fetch(`${API_BASE}/media/get_all_details`);
                 if (response.ok) {
                     filesState = await response.json();
                 } else {
@@ -1838,10 +1838,11 @@
 
         function processIncomingUploadSelection(file) {
             const targetExtension = file.name.split('.').pop().toLowerCase();
-            if (targetExtension !== 'pdf' && targetExtension !== 'txt') {
-                showToast("Unsupported configuration format. Only PDF and TXT file parsing schemas map correctly.", "error");
+            if (targetExtension !== 'mp3' && targetExtension !== 'mp4' && targetExtension !== 'png' && targetExtension !== 'wav') {
+                showToast("Unsupported configuration format. Only mp3, mp4, png and wav file parsing schemas map correctly.", "error");
                 return;
             }
+
             uploadFile(file);
         }
 
@@ -1857,7 +1858,7 @@
             statusBox.style.display = "flex";
 
             const formData = new FormData();
-            formData.append("file", file);
+            formData.append("media_file", file);
 
             // Simulating incremental granular progress tracking frame before dispatch execution
             let dynamicProgressSim = 0;
@@ -1870,7 +1871,7 @@
             }, 150);
 
             try {
-                const response = await fetch(`${API_BASE}/file/upload`, {
+                const response = await fetch(`${API_BASE}/media/upload`, {
                     method: "POST",
                     body: formData
                 });
@@ -1913,12 +1914,6 @@
                 "stored_filename": responseData?.stored_filename || `${Math.random().toString(16).substr(2, 8)}.${nativeFileObject.name.split('.').pop()}`,
                 "filepath": responseData?.filepath || `uploads/mock_paths/${nativeFileObject.name}`,
                 "filesize": nativeFileObject.size,
-                "pagecount": responseData?.pagecount || Math.floor(Math.random() * 20) + 1,
-                "title": responseData?.title || `${nativeFileObject.name.split('.')[0]} Resource Deck`,
-                "author": responseData?.author || "Authenticated User Block",
-                "creator": responseData?.creator || "Web Client Interface",
-                "producer": responseData?.producer || "AI Knowledge Base Core Pipeline Engine",
-                "content": "This text contains full synthetic extracted internal database node fields parsing metrics elements for runtime execution operations tracking context...",
                 "uploaded_at": new Date().toISOString()
             };
 
@@ -1976,7 +1971,7 @@
             showLoader();
 
             try {
-                const response = await fetch(`${API_BASE}/file/get_details/of_all_files${fileId}`, {
+                const response = await fetch(`${API_BASE}/media/get_all_details_by_id/${fileId}`, {
                     method: "GET",
                     headers: { "Content-Type": "application/json" },
                 });
@@ -2031,7 +2026,7 @@
             showLoader();
 
             try {
-                const response = await fetch(`${API_BASE}/file/delete/${pendingActionFileTargetId}`, {
+                const response = await fetch(`${API_BASE}/media/delete/${pendingActionFileTargetId}`, {
                     method: "DELETE"
                 });
 

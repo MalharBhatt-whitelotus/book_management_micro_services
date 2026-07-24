@@ -9,12 +9,12 @@ class ServiceManager:
         self.processes = {}
         self.running = True
     
-    def _launch_service(self, module: str, port: int):
-        return subprocess.Popen([sys.executable, "-m", "uvicorn", f"{module}:app", "--port", str(port)])
+    def _launch_service(self, module: str, port: int, working_dir : str):
+        return subprocess.Popen([sys.executable, "-m", "uvicorn", f"{module}:app", "--port", str(port)], cwd=working_dir)
 
-    def start_service(self, name, module, port):
-        process = self._launch_service(module, port)
-        self.processes[name] = {"module":module,"port":port,"process":process}
+    def start_service(self, name: str, module: str, port: int, working_dir: str = "/Users/maulik/malhar /day-16 task2"):
+        process = self._launch_service(module, port, working_dir)
+        self.processes[name] = {"module":module,"port":port,"process":process,"cwd":working_dir}
 
     def stop_all(self):
         self.running = False
